@@ -5,7 +5,6 @@ import java.util.*;
 public class Utils {
     public static int MIN_NODE_COUNT = 5;
     public static int NODE_RADIUS = 5;
-
     public static HashMap<Node, LinkedHashSet<Node>> generateRandomGraph(int width, int height) {
         // total no. of nodes in the graph - minimum 5
         int NUM_NODES = MIN_NODE_COUNT + (int)(Math.random() * 5);
@@ -33,7 +32,8 @@ public class Utils {
             LinkedHashSet<Node> neighbours = graph.get(parent);
 
             // randomly set no. of children for each parent {min:0, max: total_nodes-1}
-            int CHILDREN_COUNT = com.raunits.algorithms.Utils.getRandomNumber(0, NUM_NODES);
+//            int CHILDREN_COUNT = com.raunits.algorithms.Utils.getRandomNumber(0, 3 * NUM_NODES / 4);
+            int CHILDREN_COUNT = 2;
 
             // fill nb nodes
             while (neighbours.size() < CHILDREN_COUNT) {

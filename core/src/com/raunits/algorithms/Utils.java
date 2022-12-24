@@ -1,7 +1,11 @@
 package com.raunits.algorithms;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import java.util.Random;
 
@@ -9,6 +13,20 @@ public class Utils {
     public static Color createColor(int r, int g, int b, int a) {
         return new Color(r/255f, g/255f, b/255f, a);
     }
+
+    public static TextButton.TextButtonStyle getDefaultRedStyle() {
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = Constants.buttonFont;
+        textButtonStyle.fontColor = Constants.RED;
+        return textButtonStyle;
+    }
+
+    public static TextButton createButton(String label) {
+        TextButton button = new TextButton(label, getDefaultRedStyle());
+        button.setColor(Constants.RED);
+        return button;
+    }
+
     public static int getRandomNumber(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
