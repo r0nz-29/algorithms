@@ -2,15 +2,11 @@ package com.raunits.algorithms;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.raunits.algorithms.graphs.GraphAlgorithms;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -52,7 +48,7 @@ public class Algorithms extends ApplicationAdapter {
 		for (int i=0; i<buttons.size(); i++) {
 			TextButton btn = buttons.get(i);
 			btn.setX(WIDTH - btn.getWidth() - 10);
-			btn.setY(HEIGHT - btn.getHeight() - i * 20);
+			btn.setY(HEIGHT - btn.getHeight() - 10 - i * 20);
 			stage.addActor(btn);
 		}
 	}

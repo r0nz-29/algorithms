@@ -1,6 +1,7 @@
 package com.raunits.algorithms.graphs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +18,8 @@ public class GraphAlgorithms extends Animation {
     public HashMap<Node, LinkedHashSet<Node>> graph;
     int WIDTH;
     int HEIGHT;
-    Algorithm algorithm;
+    Algorithm bfsAlgorithm;
+    Algorithm coloringAlgorithm;
     List<TextButton> buttons;
 
     public void create(Stage stage, ShapeRenderer shapeRenderer) {
@@ -25,13 +27,15 @@ public class GraphAlgorithms extends Animation {
         HEIGHT = Gdx.graphics.getHeight();
         graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
 
-        algorithm = new BFS();
+        bfsAlgorithm = new BFS();
+        coloringAlgorithm = new GraphColoringAlgorithm();
         createButtons();
     }
 
     public void render(Stage stage, ShapeRenderer shapeRenderer) {
         drawGraph(shapeRenderer);
-        algorithm.animate();
+        bfsAlgorithm.animate();
+        coloringAlgorithm.animate();
     }
 
     public void dispose() {
@@ -43,17 +47,28 @@ public class GraphAlgorithms extends Animation {
 
     private void createButtons() {
         buttons = new ArrayList<>();
-        buttons.add(createBfsButton());
         buttons.add(createRefreshButton());
+        buttons.add(createBfsButton());
         buttons.add(resetBfsButton());
+        buttons.add(startColoringButton());
     }
 
+    private TextButton startColoringButton() {
+        TextButton button = com.raunits.algorithms.Utils.createButton("Graph Coloring Algorithm");
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                coloringAlgorithm.init(graph);
+            }
+        });
+        return button;
+    }
     private TextButton resetBfsButton() {
         TextButton btn = com.raunits.algorithms.Utils.createButton("Reset BFS");
         btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                algorithm.reset();
+                bfsAlgorithm.reset();
             }
         });
         return btn;
@@ -63,18 +78,19 @@ public class GraphAlgorithms extends Animation {
         startBfsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                algorithm.init(graph);
+                bfsAlgorithm.init(graph);
             }
         });
         return startBfsButton;
     }
 
     private TextButton createRefreshButton() {
-        TextButton refreshBtn = com.raunits.algorithms.Utils.createButton("Refresh");
+        TextButton refreshBtn = com.raunits.algorithms.Utils.createButton("Change graph");
         refreshBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                algorithm.reset();
+                bfsAlgorithm.reset();
+                coloringAlgorithm.reset();
                 ScreenUtils.clear(Constants.BACKGROUND);
                 graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
             }
@@ -88,7 +104,7 @@ public class GraphAlgorithms extends Animation {
 
             for (Node nb : e.getValue()) {
                 com.raunits.algorithms.Utils.drawCircle(nb.color, nb, Utils.NODE_RADIUS, renderer);
-                com.raunits.algorithms.Utils.drawline(e.getKey(), nb, renderer);
+                com.raunits.algorithms.Utils.drawline(e.getKey(), nb, Color.BLACK, renderer);
             }
         }
     }

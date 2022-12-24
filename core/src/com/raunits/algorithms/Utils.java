@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.Random;
 
 public class Utils {
-    public static Color createColor(int r, int g, int b, int a) {
+    public static Color createColor(float r, float g, float b, float a) {
         return new Color(r/255f, g/255f, b/255f, a);
     }
 
@@ -31,8 +31,8 @@ public class Utils {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
-    public static void drawline(Coordinate a, Coordinate b, ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(Color.BLACK);
+    public static void drawline(Coordinate a, Coordinate b, Color color, ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(color);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.line(a.x, a.y, b.x, b.y);
         shapeRenderer.end();

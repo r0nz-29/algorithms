@@ -24,6 +24,7 @@ public class BFS extends Algorithm {
         Node root = graph.keySet().iterator().next();
         queue.add(root);
         visited.add(root);
+        elapsed = duration;
     }
 
     public void animate() {

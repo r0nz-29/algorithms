@@ -6,6 +6,7 @@ import com.raunits.algorithms.Coordinate;
 
 public class Node extends Coordinate {
     Color color = Constants.RED;
+    Color fakeColor;
 
     public Node() {
         super();
@@ -14,6 +15,7 @@ public class Node extends Coordinate {
     public Node(float x, float y) {
         this.x = x;
         this.y = y;
+        this.fakeColor = Color.BLACK;
     }
 
     @Override

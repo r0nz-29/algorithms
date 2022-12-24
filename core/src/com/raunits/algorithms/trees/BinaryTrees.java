@@ -1,6 +1,7 @@
 package com.raunits.algorithms.trees;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -115,8 +116,8 @@ public class BinaryTrees extends Animation {
     private void drawBranches(TreeNode root, ShapeRenderer shapeRenderer) {
         if (root == null) return;
 
-        if (root.left != null) com.raunits.algorithms.Utils.drawline(root, root.left, shapeRenderer);
-        if (root.right != null) com.raunits.algorithms.Utils.drawline(root, root.right, shapeRenderer);
+        if (root.left != null) com.raunits.algorithms.Utils.drawline(root, root.left, Color.BLACK, shapeRenderer);
+        if (root.right != null) com.raunits.algorithms.Utils.drawline(root, root.right, Color.BLACK, shapeRenderer);
 
         drawBranches(root.left, shapeRenderer);
         drawBranches(root.right, shapeRenderer);
