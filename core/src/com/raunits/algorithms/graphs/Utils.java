@@ -8,6 +8,7 @@ public class Utils {
     public static HashMap<Node, LinkedHashSet<Node>> generateRandomGraph(int width, int height) {
         // total no. of nodes in the graph - minimum 5
         int NUM_NODES = MIN_NODE_COUNT + (int)(Math.random() * 5);
+//        int NUM_NODES = MIN_NODE_COUNT;
 
         // graph can be represented as a hashmap of nodes and list of their neighbours
         HashMap<Node, LinkedHashSet<Node>> graph = new HashMap<>();
@@ -17,7 +18,7 @@ public class Utils {
 
         // nodes will be randomly placed on the canvas
         while (nodes.size() < NUM_NODES) {
-            float x = com.raunits.algorithms.Utils.getRandomNumber(10, width - 10);
+            float x = com.raunits.algorithms.Utils.getRandomNumber(10, width - 150);
             float y = com.raunits.algorithms.Utils.getRandomNumber(10, height - 10);
             nodes.add(new Node(x, y));
         }
@@ -32,7 +33,7 @@ public class Utils {
             LinkedHashSet<Node> neighbours = graph.get(parent);
 
             // randomly set no. of children for each parent {min:0, max: total_nodes-1}
-//            int CHILDREN_COUNT = com.raunits.algorithms.Utils.getRandomNumber(0, 3 * NUM_NODES / 4);
+//            int CHILDREN_COUNT = com.raunits.algorithms.Utils.getRandomNumber(0,  NUM_NODES);
             int CHILDREN_COUNT = 2;
 
             // fill nb nodes

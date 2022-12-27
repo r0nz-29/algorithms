@@ -18,24 +18,19 @@ public class GraphAlgorithms extends Animation {
     public HashMap<Node, LinkedHashSet<Node>> graph;
     int WIDTH;
     int HEIGHT;
-    Algorithm bfsAlgorithm;
-    Algorithm coloringAlgorithm;
+    Algorithm algorithm;
     List<TextButton> buttons;
 
     public void create(Stage stage, ShapeRenderer shapeRenderer) {
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
         graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
-
-        bfsAlgorithm = new BFS();
-        coloringAlgorithm = new GraphColoringAlgorithm();
         createButtons();
     }
 
     public void render(Stage stage, ShapeRenderer shapeRenderer) {
         drawGraph(shapeRenderer);
-        bfsAlgorithm.animate();
-        coloringAlgorithm.animate();
+        if (algorithm != null) algorithm.animate();
     }
 
     public void dispose() {
@@ -53,12 +48,21 @@ public class GraphAlgorithms extends Animation {
         buttons.add(startColoringButton());
     }
 
+    private void resetGraph() {
+        for (Node node: graph.keySet()) {
+            node.color = Constants.RED;
+            node.fakeColor = Color.BLACK;
+        }
+    }
+
     private TextButton startColoringButton() {
-        TextButton button = com.raunits.algorithms.Utils.createButton("Graph Coloring Algorithm");
+        TextButton button = com.raunits.algorithms.Utils.createButton("Check if bipartite");
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                coloringAlgorithm.init(graph);
+                resetGraph();
+                algorithm = new GraphColoringAlgorithm();
+                algorithm.init(graph);
             }
         });
         return button;
@@ -68,7 +72,8 @@ public class GraphAlgorithms extends Animation {
         btn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                bfsAlgorithm.reset();
+                algorithm = null;
+                resetGraph();
             }
         });
         return btn;
@@ -78,26 +83,25 @@ public class GraphAlgorithms extends Animation {
         startBfsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                bfsAlgorithm.init(graph);
+                resetGraph();
+                algorithm = new BFS();
+                algorithm.init(graph);
             }
         });
         return startBfsButton;
     }
-
     private TextButton createRefreshButton() {
         TextButton refreshBtn = com.raunits.algorithms.Utils.createButton("Change graph");
         refreshBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                bfsAlgorithm.reset();
-                coloringAlgorithm.reset();
+                algorithm = null;
                 ScreenUtils.clear(Constants.BACKGROUND);
                 graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
             }
         });
         return refreshBtn;
     }
-
     private void drawGraph(ShapeRenderer renderer) {
         for (Map.Entry<Node, LinkedHashSet<Node>> e : graph.entrySet()) {
             com.raunits.algorithms.Utils.drawCircle(e.getKey().color, e.getKey(), Utils.NODE_RADIUS, renderer);

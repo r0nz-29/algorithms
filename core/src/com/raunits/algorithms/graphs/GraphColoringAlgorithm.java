@@ -38,7 +38,13 @@ public class GraphColoringAlgorithm extends Algorithm {
 
     public void animate() {
         if (pendingColorsQueue == null) return;
-        if (stopped && pendingColorsQueue.isEmpty()) Utils.drawline(sameColorNodes[0], sameColorNodes[1], Constants.RED, new ShapeRenderer());
+        if (pendingColorsQueue.isEmpty()) {
+            if (stopped) {
+                Utils.drawline(sameColorNodes[0], sameColorNodes[1], Constants.RED, new ShapeRenderer());
+                Utils.drawAlertMsg("Non-bipartite graph!!", Constants.RED);
+            }
+            else Utils.drawAlertMsg("Bipartite graph!!", Constants.GREEN);
+        }
 
         if (!pendingColorsQueue.isEmpty()) {
             if (elapsed < duration) {
@@ -54,7 +60,7 @@ public class GraphColoringAlgorithm extends Algorithm {
 
     public void reset() {
         stopped = false;
-        if (pendingColorsQueue != null) pendingColorsQueue.clear();
+        pendingColorsQueue = null;
         sameColorNodes = new Node[2];
 
         if (graph != null) for (Node node: graph.keySet()) node.color = Constants.RED;
@@ -82,7 +88,6 @@ public class GraphColoringAlgorithm extends Algorithm {
                 }
                 // not bipartite
                 else if (nb.fakeColor == curr.fakeColor) {
-//                    System.out.println("not bipartite");
                     sameColorNodes[0] = nb;
                     sameColorNodes[1] = curr;
                     stopped = true;

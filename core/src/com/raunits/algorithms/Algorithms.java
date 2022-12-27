@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.raunits.algorithms.classics.percolation.Percolation;
 import com.raunits.algorithms.graphs.GraphAlgorithms;
+import com.raunits.algorithms.trees.BinaryTrees;
 
 import java.util.List;
 
@@ -25,10 +27,10 @@ public class Algorithms extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 		Gdx.input.setInputProcessor(stage);
 
-		animation = new GraphAlgorithms();
+		animation = new Percolation();
 		animation.create(stage, shapeRenderer);
 
-		addAnimationButtons(animation.getButtons());
+		addAnimationButtons();
 	}
 
 	@Override
@@ -44,7 +46,10 @@ public class Algorithms extends ApplicationAdapter {
 		animation.dispose();
 	}
 
-	private void addAnimationButtons(List<TextButton> buttons) {
+	private void addAnimationButtons() {
+		List<TextButton> buttons = animation.getButtons();
+		if (buttons == null) return;
+
 		for (int i=0; i<buttons.size(); i++) {
 			TextButton btn = buttons.get(i);
 			btn.setX(WIDTH - btn.getWidth() - 10);
