@@ -1,5 +1,6 @@
 package com.raunits.algorithms.graphs;
 
+import com.badlogic.gdx.Gdx;
 import com.raunits.algorithms.Algorithm;
 import com.raunits.algorithms.Constants;
 
@@ -7,7 +8,6 @@ import java.util.*;
 
 public class KruskalMST extends Algorithm {
     PriorityQueue<Edge> minHeap;
-    Queue<Edge> mst;
     UnionFind uf;
     WeightedGraph graph;
 
@@ -15,13 +15,19 @@ public class KruskalMST extends Algorithm {
         super.init(o);
         graph = (WeightedGraph) o;
         uf = new UnionFind(graph.vertices);
-        mst = new LinkedList<>();
         minHeap = new PriorityQueue<>((a, b) -> a.weight - b.weight);
         minHeap.addAll(graph.edges);
+        duration = 0.1f;
+        elapsed = duration;
     }
 
     public void animate() {
         if (minHeap == null || minHeap.isEmpty()) return;
+
+        if (elapsed < duration) {
+            elapsed += Gdx.graphics.getDeltaTime();
+            return;
+        }
 
         Edge curr = minHeap.poll();
         Vertex v = curr.either();
@@ -33,8 +39,8 @@ public class KruskalMST extends Algorithm {
             v.color = Constants.RED;
             w.color = Constants.RED;
             curr.color = Constants.RED;
-            mst.add(curr);
         }
+        elapsed = 0;
     }
 
     public void reset() {
