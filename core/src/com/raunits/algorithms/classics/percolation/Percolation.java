@@ -27,7 +27,7 @@ public class Percolation extends Animation {
     int N;
 
     public void create(Stage stage, ShapeRenderer shapeRenderer) {
-        N = 30;
+        N = 43;
 
         start = new Cell();
         end = new Cell();

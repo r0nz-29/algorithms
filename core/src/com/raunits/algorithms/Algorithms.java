@@ -27,7 +27,7 @@ public class Algorithms extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 		Gdx.input.setInputProcessor(stage);
 
-		animation = new Percolation();
+		animation = new GraphAlgorithms();
 		animation.create(stage, shapeRenderer);
 
 		addAnimationButtons();

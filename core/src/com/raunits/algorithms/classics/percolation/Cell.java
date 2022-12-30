@@ -7,7 +7,7 @@ public class Cell {
     public int i;
     public int j;
     public Color color;
-    public static float CELL_SIZE = 15;
+    public static float CELL_SIZE = 12;
 
     public Cell() {
         id = 0;

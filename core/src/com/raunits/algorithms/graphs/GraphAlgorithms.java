@@ -1,7 +1,6 @@
 package com.raunits.algorithms.graphs;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,16 +14,18 @@ import com.raunits.algorithms.Constants;
 import java.util.*;
 
 public class GraphAlgorithms extends Animation {
-    public HashMap<Node, LinkedHashSet<Node>> graph;
+    public WeightedGraph graph;
     int WIDTH;
     int HEIGHT;
     Algorithm algorithm;
     List<TextButton> buttons;
+    boolean firstRender;
 
     public void create(Stage stage, ShapeRenderer shapeRenderer) {
         WIDTH = Gdx.graphics.getWidth();
         HEIGHT = Gdx.graphics.getHeight();
-        graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
+        graph = WeightedGraph.random(WIDTH, HEIGHT);
+        firstRender = true;
         createButtons();
     }
 
@@ -43,53 +44,29 @@ public class GraphAlgorithms extends Animation {
     private void createButtons() {
         buttons = new ArrayList<>();
         buttons.add(createRefreshButton());
-        buttons.add(createBfsButton());
-        buttons.add(resetBfsButton());
-        buttons.add(startColoringButton());
+        buttons.add(kruskal());
     }
 
     private void resetGraph() {
-        for (Node node: graph.keySet()) {
-            node.color = Constants.RED;
-            node.fakeColor = Color.BLACK;
-        }
+//        for (Node node: graph.keySet()) {
+//            node.color = Constants.RED;
+//            node.fakeColor = Color.BLACK;
+//        }
     }
 
-    private TextButton startColoringButton() {
-        TextButton button = com.raunits.algorithms.Utils.createButton("Check if bipartite");
+    private TextButton kruskal() {
+        TextButton button = com.raunits.algorithms.Utils.createButton("Kruskal's MST");
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 resetGraph();
-                algorithm = new GraphColoringAlgorithm();
+                algorithm = new KruskalMST();
                 algorithm.init(graph);
             }
         });
         return button;
     }
-    private TextButton resetBfsButton() {
-        TextButton btn = com.raunits.algorithms.Utils.createButton("Reset BFS");
-        btn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                algorithm = null;
-                resetGraph();
-            }
-        });
-        return btn;
-    }
-    private TextButton createBfsButton() {
-        TextButton startBfsButton = com.raunits.algorithms.Utils.createButton("Start BFS");
-        startBfsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                resetGraph();
-                algorithm = new BFS();
-                algorithm.init(graph);
-            }
-        });
-        return startBfsButton;
-    }
+
     private TextButton createRefreshButton() {
         TextButton refreshBtn = com.raunits.algorithms.Utils.createButton("Change graph");
         refreshBtn.addListener(new ChangeListener() {
@@ -97,19 +74,19 @@ public class GraphAlgorithms extends Animation {
             public void changed(ChangeEvent event, Actor actor) {
                 algorithm = null;
                 ScreenUtils.clear(Constants.BACKGROUND);
-                graph = Utils.generateRandomGraph(WIDTH, HEIGHT);
+                graph = WeightedGraph.random(WIDTH, HEIGHT);
             }
         });
         return refreshBtn;
     }
-    private void drawGraph(ShapeRenderer renderer) {
-        for (Map.Entry<Node, LinkedHashSet<Node>> e : graph.entrySet()) {
-            com.raunits.algorithms.Utils.drawCircle(e.getKey().color, e.getKey(), Utils.NODE_RADIUS, renderer);
 
-            for (Node nb : e.getValue()) {
-                com.raunits.algorithms.Utils.drawCircle(nb.color, nb, Utils.NODE_RADIUS, renderer);
-                com.raunits.algorithms.Utils.drawline(e.getKey(), nb, Color.BLACK, renderer);
-            }
+    private void drawGraph(ShapeRenderer renderer) {
+        for (Edge edge : graph.edges) {
+            Vertex v = edge.either();
+            Vertex w = edge.other(v);
+            com.raunits.algorithms.Utils.drawCircle(v.color, v, 5, renderer);
+            com.raunits.algorithms.Utils.drawCircle(w.color, w, 5, renderer);
+            com.raunits.algorithms.Utils.drawline(v, w, edge.color, renderer);
         }
     }
 }

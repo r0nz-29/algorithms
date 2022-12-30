@@ -5,13 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.raunits.algorithms.Algorithm;
 import com.raunits.algorithms.Constants;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class Unblock extends Algorithm {
     HashSet<Integer> visited;
-    List<Cell> cells;
     static Cell[][] grid;
     static Cell start;
     static Cell end;
@@ -27,14 +24,7 @@ public class Unblock extends Algorithm {
     public void init(Object o) {
         super.init(o);
         visited = new HashSet<>();
-        cells = new ArrayList<>();
         grid = (Cell[][]) o;
-
-        for (int i = 1; i < N; i++) {
-            for (int j = 1; j < N; j++) {
-                cells.add(grid[i][j]);
-            }
-        }
 
         duration = 0.05f;
         elapsed = duration;
@@ -47,9 +37,9 @@ public class Unblock extends Algorithm {
             if (start.id == root(N + 1, k).id) return;
         }
 
-        if (elapsed < duration) {
-            elapsed += Gdx.graphics.getDeltaTime();
-        } else {
+//        if (elapsed < duration) {
+//            elapsed += Gdx.graphics.getDeltaTime();
+//        } else {
             int index = com.raunits.algorithms.Utils.getRandomNumber(0, N * N - 1);
 
             while (visited.contains(index)) {
@@ -85,8 +75,8 @@ public class Unblock extends Algorithm {
                 union(root(i + 1, j), root(i, j));
             }
 
-            elapsed = 0;
-        }
+//            elapsed = 0;
+//        }
     }
 
     private void union(Cell a, Cell b) {
