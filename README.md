@@ -1,5 +1,5 @@
 # Algorithms
-Visualizations of popular algorithms of computer science
+Visualizations of popular computer science algorithms
 
 ## Percolation
 ![percolation-smooth](https://user-images.githubusercontent.com/76162540/213430161-28ba73f3-afb9-400d-8c2f-9eba394df912.gif)  
