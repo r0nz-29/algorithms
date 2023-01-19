@@ -8,13 +8,10 @@ public class Utils {
 
     public static WeightedGraph generateWeightedGraph(int width, int height) {
         // total no. of nodes in the graph - minimum 10
-//        int NUM_NODES = MIN_NODE_COUNT;
-//        int NUM_NODES = 10 + (int)(Math.random() * 5);
-        int NUM_NODES = 8;
+        int NUM_NODES = 6;
         int id = 0;
 
         // graph can be represented as a hashmap of nodes and list of edges
-//        HashMap<Vertex, LinkedHashSet<Edge>> graph = new HashMap<>();
         WeightedGraph graph = new WeightedGraph();
 
         // LinkedHashSet is used instead of a list in order to get rid of duplicates and thus prevent self loops
@@ -33,16 +30,13 @@ public class Utils {
         // for each parent, calculate no of neighbours(nb) the parent should have,
         // and fill its adjacency list with that many edges
         for (Vertex parent : vertices) {
-//            graph.computeIfAbsent(parent, k -> new HashSet<>());
             HashSet<Edge> edges = new HashSet<>();
 
             // randomly set no. of children for each parent {min:0, max: total_nodes-1}
-//            int CHILDREN_COUNT = com.raunits.algorithms.Utils.getRandomNumber(0,  NUM_NODES);
-//            int CHILDREN_COUNT = 1 + Math.abs((int) (Math.random() * NUM_NODES/2) - (int) (Math.random() * NUM_NODES/2));
             int CHILDREN_COUNT = 1 + (int)(Math.random() * 5);
 
             // fill nb nodes
-            while (edges.size() < CHILDREN_COUNT) {
+            for (int i=0; i < CHILDREN_COUNT; i++) {
                 // get a random valid index
                 int index = com.raunits.algorithms.Utils.getRandomNumber(0, NUM_NODES);
                 Vertex potentialNB = uniqueNodeList.get(index);
@@ -50,7 +44,12 @@ public class Utils {
                 // add the potentialNB node to the adjacency list only if it is different from the parent node
                 // else it'll result in a self-loop during traversals
                 if (!potentialNB.equals(parent)) {
-                    Edge e = new Edge(parent, potentialNB, (int)(Math.random() * 100));
+                    float edgeWeight = (parent.x - potentialNB.x)*(parent.x - potentialNB.x) + (parent.y - potentialNB.y)*(parent.y - potentialNB.y);
+                    Edge e = new Edge(parent, potentialNB, (int)edgeWeight);
+                    graph.map.computeIfAbsent(parent, k -> new HashSet<>());
+                    graph.map.computeIfAbsent(potentialNB, k -> new HashSet<>()).add(e);
+                    graph.map.get(parent).add(e);
+                    graph.map.get(potentialNB).add(e);
                     edges.add(e);
                 }
             }

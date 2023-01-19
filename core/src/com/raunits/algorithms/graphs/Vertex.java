@@ -41,6 +41,6 @@ public class Vertex extends Coordinate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), color);
+        return Objects.hash(super.hashCode());
     }
 }

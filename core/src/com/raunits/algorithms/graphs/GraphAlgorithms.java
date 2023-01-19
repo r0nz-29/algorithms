@@ -45,6 +45,7 @@ public class GraphAlgorithms extends Animation {
         buttons = new ArrayList<>();
         buttons.add(createRefreshButton());
         buttons.add(kruskal());
+        buttons.add(prims());
     }
 
     private void resetGraph() {
@@ -61,6 +62,19 @@ public class GraphAlgorithms extends Animation {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 resetGraph();
                 algorithm = new KruskalMST();
+                algorithm.init(graph);
+            }
+        });
+        return button;
+    }
+
+    private TextButton prims() {
+        TextButton button = com.raunits.algorithms.Utils.createButton("Prim's MST");
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                resetGraph();
+                algorithm = new PrimsMST();
                 algorithm.init(graph);
             }
         });

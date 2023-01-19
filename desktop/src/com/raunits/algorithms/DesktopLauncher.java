@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 //		config.setWindowedMode(1280, 720);
+		config.setBackBufferConfig(0,0,0,0,16,0,4);
 		config.setTitle("Algorithms");
 		new Lwjgl3Application(new Algorithms(), config);
 	}
