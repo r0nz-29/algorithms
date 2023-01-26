@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.raunits.algorithms.classics.percolation.Percolation;
-import com.raunits.algorithms.graphs.GraphAlgorithms;
-import com.raunits.algorithms.trees.BinaryTrees;
+import com.raunits.algorithms.matrices.Matrix;
 
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class Algorithms extends ApplicationAdapter {
 		HEIGHT = Gdx.graphics.getHeight();
 		Gdx.input.setInputProcessor(stage);
 
-		animation = new GraphAlgorithms();
+		animation = new Matrix();
 		animation.create(stage, shapeRenderer);
 
 		addAnimationButtons();
