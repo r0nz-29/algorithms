@@ -1,6 +1,15 @@
 # Algorithms
 Visualizations of popular computer science algorithms
 
+## Conway's Game of Life
+![life3](https://user-images.githubusercontent.com/76162540/214912501-dcc004bb-c0cc-4cc7-83e1-ffdf67f719e4.gif)  
+Simulates a matrix of cells, where each cell is either alive (green) or dead (grey). The following rules decide which cells get to live and which ones die:
+- Any live cell with two or three live neighbours survives.
+- Any dead cell with three live neighbours becomes a live cell.
+- All other live cells die in the next generation. Similarly, all other dead cells stay dead.  
+
+More info can be found [here](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+
 ## Percolation
 ![percolation-smooth](https://user-images.githubusercontent.com/76162540/213430161-28ba73f3-afb9-400d-8c2f-9eba394df912.gif)  
 Uses union-find paradigm to find whether the system percolates - i.e. if there is a connected path from the top of the grid all the way to the bottom  
